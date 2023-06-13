@@ -55,6 +55,55 @@ export default function TextForm(props) {
         props.showAlert("copied to clipboard!", "success");
     }
 
+    const handleSpaces = ()=> {
+        let words = text.split(' ');
+        let joinedWords = '';
+        // console.log(words);
+        words.forEach((elem)=>{
+            if(elem[0] !== undefined){
+                joinedWords += elem + " ";
+                console.log(joinedWords);
+            }
+        })
+        setText(joinedWords);
+        props.showAlert("removed extra spaces!", "success");
+    };
+
+    
+    const handleSpeak = () => {
+        let msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+        props.showAlert("Listen now!", "success");
+    }
+
+    const handleSentenceCaseClick = () => {
+        let lowerCase = text.toLowerCase();
+        let regex = /([^.!?]+[!?.\d\s]+)/g;
+        let sentences = lowerCase.match(regex);
+        let newText = sentences
+          .map((sentence) => {
+            return (sentence.charAt(0) >= "a" && sentence.charAt(0) <= "z"
+              ? sentence.charAt(0).toUpperCase() + sentence.slice(1)
+              : sentence);
+          })
+          .join("");
+    
+        setText(newText);
+        props.showAlert("text formatted!", "success");
+      };
+
+      const handleCapitalizeWordClick = () => {
+        let lowercase = text.toLowerCase();
+        let words = lowercase.split(" ");
+        let newWords = words.map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        });
+        let newText = newWords.join(" ");
+        setText(newText);
+        props.showAlert("text formatted!", "success");
+      };
+
 
     const [text, setText] = useState('');
     // text = "new text" // wrong way to change the state
@@ -68,30 +117,34 @@ export default function TextForm(props) {
     return (
         <>
             <div className='container' style={{color: props.mode==='dark'?'white':'black'}}>
-                <h1>{props.heading} </h1>
+                <h1 className='mb-4'>{props.heading} </h1>
                 <div className="mb-3">
                     <textarea className="form-control" value={text} onChange={handleOnChange} style={{backgroundColor: props.mode==='dark'?'grey':'white', color: props.mode==='dark'?'white':'black'}} id="myBox" rows="8"></textarea>
                     <div className='input-group my-2'>
                     <input className="form-control" style={{backgroundColor: props.mode==='dark'?'grey':'white', color: props.mode==='dark'?'white':'black'}}value={fWord} onChange={handleFindChange} placeholder='To find' id="myBox" rows="1"></input>
                     <input className="form-control" style={{backgroundColor: props.mode==='dark'?'grey':'white', color: props.mode==='dark'?'white':'black'}} value={rWord} onChange={handleReplaceChange} placeholder='To replace' id="myBox" rows="1"></input>
-                    <button className="btn btn-primary" onClick={handleReplaceClick}>Replace</button>
+                    <button disabled={text.length===0} className="btn btn-primary" onClick={handleReplaceClick}>Replace</button>
                     </div>
                 </div>
-                <button className="btn btn-primary mx-1" onClick={handleUpCLick}>Convert to Uppercase</button>
-                <button className="btn btn-primary mx-1" onClick={handleDownCLick}>Convert to Lowercase</button>
-                <button className="btn btn-primary mx-1" onClick={handleCopy}>Copy</button>
-                <button className="btn btn-primary mx-1" onClick={handleClearClick}>Clear text</button>
-                
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleUpCLick}>Uppercase</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleDownCLick}>Lowercase</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleSpaces}>Trim extra spaces</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleSentenceCaseClick}>Format text</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCapitalizeWordClick}>Format text - II</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleSpeak}>Listen now</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy</button>
+                <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear text</button>
 
             </div>
+
             <div className="container my-3" style={{color: props.mode==='dark'?'white':'black'}}>
                 <h2>Your text summary</h2>
-                <p><b>{text.split(" ").length}</b> words & <b>{text.length}</b> characters</p>
-                <p><b>{0.008 * text.split(" ").length}</b> minutes to read</p>
+                <p><b>{text.split(" ").filter((element)=>{return element.length!==0}).length}</b> word{text.split(" ").filter((element)=>{return element.length!==0}).length>1?"s ":" "}& <b>{text.length}</b> character{text.length>1?"s ":" "}</p>
+                <p><b>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length}</b> minutes to read</p>
                 <h2>Preview</h2>
-                <p>{text.length>0?text:'Enter something in the textbox to preview it here'}</p>
+                <p>{text.length>0?text:'Nothing to preview'}</p>
             </div>
-        </>
+        </> 
 
     );
 }
