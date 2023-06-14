@@ -3,20 +3,17 @@ import React, { useState } from 'react'
 
 export default function TextForm(props) {
     const handleUpCLick = () => {
-        // console.log("UpperCase was clicked " + text);
         let newText = text.toUpperCase();
         setText(newText);
         props.showAlert("converted to uppercase!", "success");
     }
     const handleDownCLick = () => {
-        // console.log("LowerCase was clicked " + text);
         let newText = text.toLowerCase();
         setText(newText);
         props.showAlert("converted to lowercase!", "success");
     }
 
     const handleOnChange = (event) => {
-        // console.log("On change");
         setText(event.target.value);
     }
 
@@ -27,9 +24,6 @@ export default function TextForm(props) {
       console.log(replaceWord(event.target.value)) ;
     };
     const handleReplaceClick = () => {
-        // let newText = text.replaceAll(fWord,rWord);
-        // setText(newText);
-        // props.showAlert("word has been replaced!", "success");
         let newText = text.replaceAll(fWord,rWord);
         if(text.length > 0 && text.search(fWord) >= 0){
             setText(newText);
@@ -48,17 +42,13 @@ export default function TextForm(props) {
     };
 
     const handleCopy = ()=> {
-        var text = document.getElementById("myBox");
-        text.select();
-        text.setSelectionRange(0, 9999);
-        navigator.clipboard.writeText(text.value);
+        navigator.clipboard.writeText(text);
         props.showAlert("copied to clipboard!", "success");
     }
 
     const handleSpaces = ()=> {
         let words = text.split(' ');
         let joinedWords = '';
-        // console.log(words);
         words.forEach((elem)=>{
             if(elem[0] !== undefined){
                 joinedWords += elem + " ";
@@ -106,13 +96,10 @@ export default function TextForm(props) {
 
 
     const [text, setText] = useState('');
-    // text = "new text" // wrong way to change the state
-    // setText("new text") // correct way to change the state
 
     const [fWord, findWord] = useState("");
     const [rWord, replaceWord] = useState("");
     
-
 
     return (
         <>
@@ -139,7 +126,7 @@ export default function TextForm(props) {
 
             <div className="container my-3" style={{color: props.mode==='dark'?'white':'black'}}>
                 <h2>Your text summary</h2>
-                <p><b>{text.split(" ").filter((element)=>{return element.length!==0}).length}</b> word{text.split(" ").filter((element)=>{return element.length!==0}).length>1?"s ":" "}& <b>{text.length}</b> character{text.length>1?"s ":" "}</p>
+                <p><b>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length}</b> word{text.split(" ").filter((element)=>{return element.length!==0}).length>1?"s ":" "}& <b>{text.length}</b> character{text.length>1?"s ":" "}</p>
                 <p><b>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length}</b> minutes to read</p>
                 <h2>Preview</h2>
                 <p>{text.length>0?text:'Nothing to preview'}</p>

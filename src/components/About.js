@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function About(props) {
 
@@ -49,6 +50,19 @@ let myStyle = {
                     <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div className="accordion-body">
                         This word manipulater software works in any web browsers such as <i>Chrome, Firefox, Internet Explorer, Safari, Opera.</i> It suits to count characters in facebook, blog, books, excel document, pdf document, essays, etc.
+                        </div>
+                    </div>
+                </div>
+                <div className="accordion-item" style={myStyle}>
+                    <h2 className="accordion-header">
+                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style={myStyle}>
+                            <strong><i>Made with Care</i></strong>
+                        </button>
+                    </h2>
+                    <div id="collapseFour" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div className="accordion-body">
+                        Hi, I am <i>Aniket Chakraborty</i> and this is my first <i>react js</i> project where I got to learn about a lot about the components as well hooks and many more functionalities.    
+                        <i><Link to={"https://github.com/aniketrick/textUtils"}>Git</Link> </i>
                         </div>
                     </div>
                 </div>
