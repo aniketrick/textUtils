@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+      .progress-container{
+        width: 90%;
+        height: 25px;
+        background-color: gainsboro;
+        border: 2px solid;
+        border-radius: 20px;
+        position: relative;
+        left: 4%;
+      }  
+      .progress-bar{
+        background-color: mediumorchid;
+        height: 100%;
+        /* width: 50%; */
+        border-radius: 20px;
+        color: white;
+        padding-left: 10px;
+
+        animation: animate_progress 3s alternate;
+      }
+      @keyframes animate_progress {
+        0%{width: 0%; transform: translateY(0); height: 100%;}
+        90%{width: 95%; transform: translateY(0); height: 100%;}
+        95%{width: 70%; transform: translateY(-10px); height: 100%;}
+        97%{width: 103%; height: 95%;}
+        100%{width: 100%; transform: translateY(0); height: 100%;}
+
+        0% {
+    transform: translateY(0);
+  }
+  50% {
+    ;
+  }
+  100% {
+    ;
+  }
+}
+      }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar">Loading</div>
+    </div>
+</body>
+</html>

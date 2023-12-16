@@ -47,18 +47,10 @@ export default function TextForm(props) {
     }
 
     const handleSpaces = ()=> {
-        let words = text.split(' ');
-        let joinedWords = '';
-        words.forEach((elem)=>{
-            if(elem[0] !== undefined){
-                joinedWords += elem + " ";
-                console.log(joinedWords);
-            }
-        })
-        setText(joinedWords);
+        let removeEmptyLines = str => str.split(/\r?\n/).filter(line => line.trim() !== '').join('\n')
+        setText(removeEmptyLines);
         props.showAlert("removed extra spaces!", "success");
     };
-
     
     const handleSpeak = () => {
         let msg = new SpeechSynthesisUtterance();
